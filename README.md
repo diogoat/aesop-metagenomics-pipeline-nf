@@ -80,7 +80,14 @@ cd aesop-metagenomics-pipeline-nf
 ```
 2. **Executable and Database Configuration**
 
-Download the databases and edit the *nextflow.config* file 
+Download the databases, programs and edit the *nextflow.config* file
+
+The programs and databases* could be found at the following link: 
+
+https://zenodo.org/records/20168222
+
+*Because of the size, the Kraken PlusPF database need to be downloaded directly from the Kraken Webpage https://benlangmead.github.io/aws-indexes/k2 or 
+
 
 3. **Test the installation**
 ```bash
