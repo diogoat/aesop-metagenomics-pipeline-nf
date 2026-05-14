@@ -1,35 +1,41 @@
-[![DOI](https://zenodo.org/badge/852272699.svg)](https://doi.org/10.5281/zenodo.13983370)
 
-# Design and Implementation of a Metagenomic Analytical Pipeline for Respiratory Pathogen Detection
+
+# Metagenomic Analytical Pipeline for Respiratory Pathogen Detection
+
+
 
 ## Abstract
-
-**Objective**: We developed an in-house bioinformatics pipeline to improve the detection of respiratory pathogens in metagenomic sequencing data. This pipeline addresses the need for short-time analysis, high accuracy, scalability, and reproducibility in a high-performance computing environment.
-
-**Results**: We evaluated our pipeline using ninety synthetic metagenomes designed to simulate nasopharyngeal swab samples. The pipeline successfully identified 177 out of 204 respiratory pathogens present in the compositions, with an average processing time of approximately 4 minutes per sample (processing 1 million paired-end reads of 150 base pairs). For the estimation of all the 470 taxa included in the compositions, the pipeline demonstrated high accuracy, identifying 420 and achieving a correlation of 0.9 between their actual and predicted relative abundances. Among the identified taxa, 27 were significantly underestimated or overestimated, including only three clinically relevant pathogens. These findings underscore the pipeline's effectiveness in pathogen detection and highlight its potential utility in respiratory pathogen surveillance.
+Scalable Genomic Integration into Syndromic Surveillance for Respiratory Outbreak Preparedness in Brazil:
+Timely detection of respiratory outbreaks is a key step for epidemic preparedness. Brazil’s Alert-Early System of Outbreaks with Pandemic Potential (ÆSOP) uses anomaly detections in the curves of Primary Health Care encounters data for syndromically detecting increases of influenza-like illnesses. Herein, we present a proof-of-concept study evaluating the integration of a cost-efficient genomic module into ÆSOP, using pooled-sample Next-Generation Sequencing with Hybrid Capture (NGS-HC) to characterize pathogens during both alert and baseline periods across seven cities, representing all Brazilian regions (n=1,137 samples; 114 pools). We performed RT-qPCR for major respiratory viruses in all samples, as a benchmark for NGS-HC results. NGS-HC detected 33 viral species, including Flu A, SARS-CoV-2, RSV, HRV, seasonal HCoVs, together with exploratory profiling of respiratory tract-associated bacteria. Overall concordance with RT-qPCR was moderate (sensitivity 80.81%, specificity 81.27%, weighted kappa = 0.53). Pooling samples led to a tenfold cost-per-sample reduction, with a median turnaround time of 7 days. Syndromic alerts consistently coincided with high impact in public health pathogens, while in non-alert periods there was a predominance of endemic, lower impact viruses. There was a marked regional and seasonal variation in genomic profiles, indicating the need for a national baseline pathogen landscape. We addressed amplicon contamination challenges through laboratory protocols and stringent bioinformatic pipelines. Our findings support the integration of genomic surveillance for early outbreak detection in decentralized health systems, providing a scalable model for low- and middle-income countries to enhance epidemic preparedness.
 
 
 ## Methods
 
 Our work performed the following steps:
 
-1. [**Generation of Synthetic Metagenomes**]()
-    1. Defining the samples composition
-    2. Collecting the taxonomic ranks metadata
-    3. Defining each taxon abundance
-    4. Downloading the genomes of these taxa
-    5. Generation of the synthetic metagenomes
-2. [**Execution of Analysis Pipeline**]()
-    1. Adapter Trimming and Quality Filtering
-    2. Host Decontamination
+[**Execution of Analysis Pipeline**]()
+
+    1. Download files from Basespace
+    2. Adapter Trimming and Quality Filtering
+    3. Host Decontamination
     2. Taxa Annotation
     3. Species-Level taxa abundance retrieval
-3. [**Creating and Plotting Results**]()
+
 
 
 ## Installation
 
 Install the necessary software using the following commands:
+
+1. **Install nextflow and conda for workflow and environmental management, respectively**
+Download and install Nextflow and its dependencies [here](https://docs.seqera.io/nextflow/install)
+```bash
+#install conda 24.10
+wget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh
+bash Anaconda3-2024.10-1-Linux-x86_64.sh
+```
+There is no need for installing conda envs. Nextflow will handle the necessary dependencies for each step using the environment files stored in the ``envs`` directory
+
 
 ```bash
 # Python
@@ -69,25 +75,24 @@ sudo mv src/generate_kmer_distribution.py /usr/local/bin/
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/cidacslab/aesop-metagenomics-pipeline.git
+git clone https://github.com/cidacslab/aesop-metagenomics-pipeline-nf.git
 cd aesop-metagenomics-pipeline
 ```
+2. **Executable and Database Configuration**
 
-2. **Execute the pipeline**
+Download the databases and edit the *nextflow.config* file 
 
-To start the pipeline edit the parameters for the file locations, like explained in the [methods](#METHODS), and execute the following command:
-
+3. **Test the installation**
 ```bash
-./src/start_pipeline_job.sh
-
+nextflow run aesop.nf --source /path/to/read.{fastq,fastq.gz,fq or fq.gz}
 ```
 
 ## Citation
 
 If you use this pipeline in your research, please cite the following paper:
 
-
 > Viana, P. A. B.; Tschoeke, D. A.; de Moraes, L.; Santos, L. A.; Barral-Netto, M.; Khouri, R.; Ramos, P. I. P.; Meirelles, P. M.; (2024). Design and Implementation of a Metagenomic Analytical Pipeline for Respiratory Pathogen Detection. BMC Res Notes 17, 291 (2024). https://doi.org/10.1186/s13104-024-06964-9
+> Scalable Genomic Integration into Syndromic Surveillance for Respiratory Outbreak Preparedness in Brazil 
 
-* Corresponding Author: Pedro M Meirelles (pmeirelles@ufba.br)
-* On any code issues, correspond to: Pablo Viana (pablo.alessandro@gmail.com)
+* Corresponding Author: Ricardo Khouri (ricardo.khouri@fiocruz.br) and Pedro M Meirelles (pmeirelles@ufba.br)
+* On any code issues, correspond to: Pablo Viana (pablo.alessandro@gmail.com) and Tiago Cabral (tiago.cabral422@gmail.com)
