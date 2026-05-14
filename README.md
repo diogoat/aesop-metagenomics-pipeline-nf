@@ -92,6 +92,7 @@ nextflow run aesop.nf --source /path/to/read.{fastq,fastq.gz,fq or fq.gz}
 If you use this pipeline in your research, please cite the following paper:
 
 > Viana, P. A. B.; Tschoeke, D. A.; de Moraes, L.; Santos, L. A.; Barral-Netto, M.; Khouri, R.; Ramos, P. I. P.; Meirelles, P. M.; (2024). Design and Implementation of a Metagenomic Analytical Pipeline for Respiratory Pathogen Detection. BMC Res Notes 17, 291 (2024). https://doi.org/10.1186/s13104-024-06964-9
+
 > Scalable Genomic Integration into Syndromic Surveillance for Respiratory Outbreak Preparedness in Brazil 
 
 * Corresponding Author: Ricardo Khouri (ricardo.khouri@fiocruz.br) and Pedro M Meirelles (pmeirelles@ufba.br)
