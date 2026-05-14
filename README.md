@@ -76,7 +76,7 @@ sudo mv src/generate_kmer_distribution.py /usr/local/bin/
 
 ```bash
 git clone https://github.com/cidacslab/aesop-metagenomics-pipeline-nf.git
-cd aesop-metagenomics-pipeline
+cd aesop-metagenomics-pipeline-nf
 ```
 2. **Executable and Database Configuration**
 
