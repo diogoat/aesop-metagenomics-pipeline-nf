@@ -36,38 +36,11 @@ bash Anaconda3-2024.10-1-Linux-x86_64.sh
 ```
 There is no need for installing conda envs. Nextflow will handle the necessary dependencies for each step using the environment files stored in the ``envs`` directory
 
-
 ```bash
 # Python
 sudo apt update
 sudo apt install python3 python3-pip make
 pip3 install biopython
-
-# Install Fastp
-sudo apt install fastp
-
-# Install HISAT2
-sudo apt install hisat2
-
-# Install Bowtie2
-sudo apt install bowtie2
-
-# Install Samtools
-sudo apt install samtools
-
-# Install Kraken2
-sudo apt install kraken2
-
-# Install Bracken
-wget https://github.com/jenniferlu717/Bracken/archive/refs/tags/v2.9.tar.gz
-tar -xvzf v2.9.tar.gz
-cd Bracken-2.9
-./install_bracken.sh
-sudo mv bracken /usr/local/bin/
-sudo mv bracken-build /usr/local/bin/
-sudo mv src/kmer2read_distr /usr/local/bin/
-sudo mv src/est_abundance.py /usr/local/bin/
-sudo mv src/generate_kmer_distribution.py /usr/local/bin/
 ```
 
 ## Usage
@@ -75,7 +48,7 @@ sudo mv src/generate_kmer_distribution.py /usr/local/bin/
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/cidacslab/aesop-metagenomics-pipeline-nf.git
+git clone https://github.com/diogoat/aesop-metagenomics-pipeline-nf.git
 cd aesop-metagenomics-pipeline-nf
 ```
 2. **Executable and Database Configuration**
@@ -86,7 +59,7 @@ The programs and databases* could be found at the following link:
 
 https://zenodo.org/records/20168222
 
-*Because of the size, the Kraken PlusPF database need to be downloaded directly from the Kraken Webpage https://benlangmead.github.io/aws-indexes/k2 or 
+*Because of the size, the Kraken PlusPF database need to be downloaded directly from the Kraken Webpage https://benlangmead.github.io/aws-indexes/k2  
 
 
 3. **Test the installation**
