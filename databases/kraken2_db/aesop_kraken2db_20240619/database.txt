@@ -1,0 +1,1 @@
+Files here: database130mers.kmer_distrib  database130mers.kraken  database.kraken  hash.k2d  opts.k2d  seqid2taxid.map  taxo.k2d  unmapped.txt
