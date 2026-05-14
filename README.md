@@ -23,9 +23,7 @@ Our work performed the following steps:
 
 
 
-## Installation
-
-Install the necessary software using the following commands:
+## Installation and Usage
 
 1. **Install nextflow and conda for workflow and environmental management, respectively**
 Download and install Nextflow and its dependencies [here](https://docs.seqera.io/nextflow/install)
@@ -36,36 +34,78 @@ bash Anaconda3-2024.10-1-Linux-x86_64.sh
 ```
 There is no need for installing conda envs. Nextflow will handle the necessary dependencies for each step using the environment files stored in the ``envs`` directory
 
-```bash
-# Python
-sudo apt update
-sudo apt install python3 python3-pip make
-pip3 install biopython
-```
-
-## Usage
-
-1. **Clone the repository**
-
+2. **Clone this repository**
 ```bash
 git clone https://github.com/diogoat/aesop-metagenomics-pipeline-nf.git
 cd aesop-metagenomics-pipeline-nf
+mkdir -p ./databases 
+mkdir -p ./test
 ```
-2. **Executable and Database Configuration**
+3. **Download tools and reference databases from Zenodo**
 
-Download the databases, programs and edit the *nextflow.config* file
-
-The programs and databases* could be found at the following link: 
-
-https://zenodo.org/records/20168222
-
-*Because of the size, the Kraken PlusPF database need to be downloaded directly from the Kraken Webpage https://benlangmead.github.io/aws-indexes/k2  
-
-
-3. **Test the installation**
+**Download Tools**
 ```bash
-nextflow run aesop.nf --source /path/to/read.{fastq,fastq.gz,fq or fq.gz}
+wget https://zenodo.org/records/20168222/files/softwares.zip?download=1 -O softwares.zip
+unzip softwares.zip
 ```
+    
+**Bowtie2 referece databases**
+```bash
+#ERCC
+mkdir -p databases/bowtie2_db/ercc92
+wget https://zenodo.org/records/20168222/files/ercc92.zip?download=1 -O ercc92.zip
+unzip ercc92.zip -d databases/bowtie2_db/ercc92
+#PHIX viral
+mkdir -p databases/bowtie2_db/phix_viralproj14015
+wget https://zenodo.org/records/20168222/files/phix_viralproj14015.zip?download=1 -O phix_viralproj14015.zip
+unzip phix_viralproj14015.zip databases/bowtie2_db/phix_viralproj14015
+#Human index
+mkdir -p databases/bowtie2_db/human_index_20240725
+wget https://zenodo.org/records/20168222/files/bowtie_human_index_20240725.zip?download=1 -O human_index_20240725.zip
+unzip human_index_20240725.zip -d databases/bowtie2_db/human_index_20240725
+```
+
+**Hisat2 referece databases**
+```bash
+#Human index
+mkdir -p databases/hisate2_db/hisat_human_index_20240725
+wget https://zenodo.org/records/20168222/files/hisat_human_index_20240725.zip?download=1 -O human_index_20240725.zip
+unzip  hisat_human_index_20240725.zip -d databases/hisate2_db/hisat_human_index_20240725
+```
+
+**Taxonomy information**
+```bash
+mkdir -p databases/taxonomy/taxdump_20250211
+wge https://zenodo.org/records/20168222/files/taxdump_20250211.zip?download=1=1 -O taxdump_20
+250211.zip
+unzip taxdump_20250211.zip -d databases/taxonomy/taxdump_20250211
+```
+
+**Kraken/Braken database is too large (>200Gb) to be storaged in Zenodo. Therefore, it's necessary to build it from scrath**
+```bash
+mkdir -p databases/kraken2_db/aesop_kraken2db
+./softwares/kraken2-2.1.3/bin/kraken2-build --download-taxonomy --db databases/kraken2_db/aesop_kraken2db
+./softwares/kraken2-2.1.3/bin/kraken2-build --download-library bacteria --db databases/kraken2_db/aesop_kraken2db
+./softwares/kraken2-2.1.3/bin/kraken2-build --download-library viral --db databases/kraken2_db/aesop_kraken2db
+./softwares/kraken2-2.1.3/bin/kraken2-build --build --threads 16 --db databases/kraken2_db/aesop_kraken2db
+#Build it for Braken also
+./softwares/Bracken-2.9/bracken-build -d databases/kraken2_db/aesop_kraken2db -t 16 -k 35 -l 75
+```
+
+4. **Test the installation**
+The firt run may take a couple of minutes to start because nextflow needs to configure the environment.
+```bash
+#Download the test set from Zenodo
+wget https://zenodo.org/records/20168222/files/MOCK01_S1_L001_R1_001.fastq.gz?download=1 -O MOCK01_S1_L001_R1.fastq.gz
+wget https://zenodo.org/records/20168222/files/MOCK01_S1_L001_R2_001.fastq.gz?download=1 -O MOCK01_S1_L001_R2.fastq.gz
+wget https://zenodo.org/records/20168222/files/POOL01_S1_L001_R1_001.fastq.gz?download=1 -O POOL01_S1_L001_R1.fastq.gz
+wget https://zenodo.org/records/20168222/files/POOL01_S1_L001_R2_001.fastq.gz?download=1 -O POOL01_S1_L001_R2.fastq.gz
+mv *.fastq.gz ./test
+#Run AESOP Metagenomic Pipeline
+nextflow run aesop.nf --source test -with-report InstallTest.htm
+```
+A directory named ``Results`` will appear when the pipeline finishes. It in you can check the outputs of each step 
+
 
 ## Citation
 
